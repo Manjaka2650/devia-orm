@@ -1,0 +1,56 @@
+{
+  "name": "expo-mini-orm",
+  "version": "1.0.0",
+  "description": "Une ORM TypeScript légère pour Expo SQLite, inspirée de Sequelize",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "expo",
+    "sqlite",
+    "orm",
+    "typescript",
+    "react-native",
+    "database",
+    "sequelize"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "peerDependencies": {
+    "expo-sqlite": "^15.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "reflect-metadata": "^0.2.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/expo-mini-orm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/expo-mini-orm/issues"
+  },
+  "homepage": "https://github.com/yourusername/expo-mini-orm#readme"
+}
