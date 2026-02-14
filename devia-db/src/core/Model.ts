@@ -41,7 +41,7 @@ export abstract class Model<T extends Record<string, any>> {
    */
   public static async findAll<M extends typeof Model>(
     this: M,
-    options?: FindOptions<InstanceType<M> extends Model<infer T> ? T : any>
+    options?: FindOptions<InstanceType<M> extends Model<infer T> ? T : any>,
   ): Promise<Array<InstanceType<M> extends Model<infer T> ? T : any>> {
     const tableName = this.getTableName();
     const { sql, params } = QueryBuilder.buildSelect(tableName, options || {});
@@ -55,11 +55,11 @@ export abstract class Model<T extends Record<string, any>> {
    */
   public static async findOne<M extends typeof Model>(
     this: M,
-    options?: FindOptions<InstanceType<M> extends Model<infer T> ? T : any>
+    options?: FindOptions<InstanceType<M> extends Model<infer T> ? T : any>,
   ): Promise<(InstanceType<M> extends Model<infer T> ? T : any) | null> {
     const limitedOptions = { ...options, limit: 1 };
     const results = await this.findAll(limitedOptions);
-    return results.length > 0 ? results[0] : null;
+    return results.length > 0 ? results[0]! : null;
   }
 
   /**
@@ -67,7 +67,7 @@ export abstract class Model<T extends Record<string, any>> {
    */
   public static async findByPk<M extends typeof Model>(
     this: M,
-    id: number | string
+    id: number | string,
   ): Promise<(InstanceType<M> extends Model<infer T> ? T : any) | null> {
     return this.findOne({ where: { id } as any });
   }
@@ -77,7 +77,9 @@ export abstract class Model<T extends Record<string, any>> {
    */
   public static async create<M extends typeof Model>(
     this: M,
-    data: Omit<InstanceType<M> extends Model<infer T> ? T : any, "id"> & { id?: number }
+    data: Omit<InstanceType<M> extends Model<infer T> ? T : any, "id"> & {
+      id?: number;
+    },
   ): Promise<InstanceType<M> extends Model<infer T> ? T : any> {
     const tableName = this.getTableName();
     const { sql, params } = QueryBuilder.buildInsert(tableName, data);
@@ -97,7 +99,7 @@ export abstract class Model<T extends Record<string, any>> {
   public static async update<M extends typeof Model>(
     this: M,
     data: Partial<InstanceType<M> extends Model<infer T> ? T : any>,
-    options: UpdateOptions<InstanceType<M> extends Model<infer T> ? T : any>
+    options: UpdateOptions<InstanceType<M> extends Model<infer T> ? T : any>,
   ): Promise<number> {
     const tableName = this.getTableName();
     const { sql, params } = QueryBuilder.buildUpdate(tableName, data, options);
@@ -111,7 +113,7 @@ export abstract class Model<T extends Record<string, any>> {
    */
   public static async destroy<M extends typeof Model>(
     this: M,
-    options: DestroyOptions<InstanceType<M> extends Model<infer T> ? T : any>
+    options: DestroyOptions<InstanceType<M> extends Model<infer T> ? T : any>,
   ): Promise<number> {
     const tableName = this.getTableName();
     const { sql, params } = QueryBuilder.buildDelete(tableName, options);
@@ -125,7 +127,7 @@ export abstract class Model<T extends Record<string, any>> {
    */
   public static async count<M extends typeof Model>(
     this: M,
-    options?: FindOptions<InstanceType<M> extends Model<infer T> ? T : any>
+    options?: FindOptions<InstanceType<M> extends Model<infer T> ? T : any>,
   ): Promise<number> {
     const tableName = this.getTableName();
     let sql = `SELECT COUNT(*) as count FROM ${tableName}`;
@@ -134,7 +136,7 @@ export abstract class Model<T extends Record<string, any>> {
     if (options?.where) {
       const whereClause = (QueryBuilder as any).buildWhereClause(
         options.where,
-        params
+        params,
       );
       if (whereClause) {
         sql += ` WHERE ${whereClause}`;
@@ -150,14 +152,14 @@ export abstract class Model<T extends Record<string, any>> {
    */
   public static async sync<M extends typeof Model>(
     this: M,
-    options: { force?: boolean } = {}
+    options: { force?: boolean } = {},
   ): Promise<void> {
     const tableName = this.getTableName();
     const metadata = MetadataStorage.getTableMetadata(this);
 
     if (!metadata || metadata.columns.size === 0) {
       throw new Error(
-        `No columns defined for model ${this.name}. Use @Column decorators.`
+        `No columns defined for model ${this.name}. Use @Column decorators.`,
       );
     }
 
@@ -176,7 +178,7 @@ export abstract class Model<T extends Record<string, any>> {
         nullable: col.nullable,
         unique: col.unique,
         defaultValue: col.defaultValue,
-      })
+      }),
     );
 
     const createTableSql = QueryBuilder.buildCreateTable(tableName, columns);
