@@ -1,4 +1,4 @@
-# 📋 SYNTHÈSE - Expo Mini ORM
+# 📋 SYNTHÈSE - Devia ORM
 
 ## ✅ Ce qui a été créé
 

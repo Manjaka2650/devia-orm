@@ -1,5 +1,5 @@
 /**
- * Expo Mini ORM
+ * Devia ORM
  * Une ORM TypeScript légère pour Expo SQLite
  */
 // Decorators

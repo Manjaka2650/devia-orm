@@ -87,7 +87,7 @@ class Achat extends Model<AchatAttributes> {
 
 // Tests
 async function runTests() {
-  console.log("🧪 === EXPO MINI ORM - TESTS ===\n");
+  console.log("🧪 === Devia ORM - TESTS ===\n");
 
   try {
     // 1. Initialiser la DB
