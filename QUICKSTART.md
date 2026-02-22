@@ -1,10 +1,6 @@
-# 🚀 Démarrage Rapide - devia-orm
+# Démarrage Rapide - devia-orm
 
-## 📦 Package Créé !
-
-Félicitations ! Vous avez maintenant une ORM TypeScript complète pour Expo SQLite.
-
-## 📂 Structure du Projet
+## Structure du Projet
 
 ```
 devia-orm/
@@ -30,8 +26,6 @@ devia-orm/
 ├── tsconfig.json             ✅ Configuration TypeScript
 └── tsup.config.ts            ✅ Configuration build
 ```
-
-## ✨ Fonctionnalités Implémentées
 
 ### ✅ Core Features
 
@@ -60,13 +54,6 @@ devia-orm/
 - [x] `@NotNull()` - Non nullable
 - [x] `@Unique()` - Contrainte unique
 - [x] `@Default(value)` - Valeur par défaut
-
-### 📚 Documentation
-
-- [x] README complet avec exemples
-- [x] Guide d'intégration Expo
-- [x] Guide des fonctionnalités avancées
-- [x] Guide de publication npm
 
 ## 🎯 Exemple d'Utilisation Rapide
 
@@ -109,7 +96,7 @@ const users = await User.findAll({
 });
 ```
 
-## 🏃 Prochaines Étapes
+## Prochaines Étapes
 
 ### Option 1 : Tester Localement
 
@@ -238,7 +225,7 @@ function UserList() {
 }
 ```
 
-## 🚀 Fonctionnalités Avancées (Optionnel)
+## Fonctionnalités Avancées (Optionnel)
 
 Implémentez si besoin (voir `ADVANCED.md`) :
 
@@ -333,8 +320,8 @@ npm publish           # Publier sur npm
 
 - 📖 [Documentation complète](./README.md)
 - 🔧 [Guide d'intégration](./INTEGRATION.md)
-- 🚀 [Fonctionnalités avancées](./ADVANCED.md)
-- 📦 [Guide de publication](./PUBLISHING.md)
+- [Fonctionnalités avancées](./ADVANCED.md)
+- [Guide de publication](./PUBLISHING.md)
 - 💡 [Exemples](./examples/usage.ts)
 
 ## 🎉 Félicitations !

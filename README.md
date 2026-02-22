@@ -1,18 +1,18 @@
-# 🚀 Devia ORM
+# Devia ORM
 
 Une ORM TypeScript légère et moderne pour Expo SQLite, inspirée de Sequelize.
 
-## ✨ Caractéristiques
+## Caractéristiques
 
-- 🎯 **API simple et intuitive** - Style Sequelize pour une courbe d'apprentissage facile
-- 🔒 **100% TypeScript** - Typage complet et sûr
-- 🎨 **Décorateurs** - Définissez vos modèles de manière élégante
-- 🔍 **QueryBuilder** - Requêtes SQL générées automatiquement
-- 🛡️ **Type-safe** - Autocomplete et vérification de types
-- ⚡ **Léger** - Zéro dépendance (sauf expo-sqlite)
-- 🎭 **Opérateurs avancés** - $gt, $lt, $like, $in, etc.
+- **API simple et intuitive** - Style Sequelize pour une courbe d'apprentissage facile
+- **100% TypeScript** - Typage complet et sûr
+- **Décorateurs** - Définissez vos modèles de manière élégante
+- **QueryBuilder** - Requêtes SQL générées automatiquement
+- **Type-safe** - Autocomplete et vérification de types
+- **Léger** - Zéro dépendance (sauf expo-sqlite)
+- **Opérateurs avancés** - $gt, $lt, $like, $in, etc.
 
-## 📦 Installation
+## Installation
 
 ```bash
 npm install devia-orm expo-sqlite
@@ -24,7 +24,7 @@ ou
 yarn add devia-orm expo-sqlite
 ```
 
-## 🏗️ Configuration
+## Configuration
 
 ### 1. Activer les décorateurs
 
@@ -48,7 +48,7 @@ import { Database } from "devia-orm";
 await Database.getInstance().initialize("myapp.db");
 ```
 
-## 🎯 Utilisation de base
+## Utilisation de base
 
 ### Définir un modèle
 
@@ -209,7 +209,7 @@ await Achat.findAll({
 });
 ```
 
-## 🎨 Décorateurs disponibles
+## Décorateurs disponibles
 
 ### @Table(tableName)
 
@@ -285,7 +285,7 @@ Définit une valeur par défaut.
 score!: number;
 ```
 
-## 📚 Exemples complets
+## Exemples complets
 
 ### Modèle User
 
@@ -424,7 +424,7 @@ const productsInStock = await Product.findAll({
 - `$like` - LIKE SQL
 - `$in` - IN (liste de valeurs)
 
-## 🧪 Tests et développement
+## Tests et développement
 
 ```bash
 # Build
@@ -437,21 +437,21 @@ npm run dev
 npm run typecheck
 ```
 
-## 📝 Notes importantes
+## Notes importantes
 
 1. **Décorateurs** : Assurez-vous d'avoir `experimentalDecorators: true` dans votre tsconfig.json
 2. **Initialisation** : Appelez `Database.getInstance().initialize()` avant d'utiliser les modèles
 3. **Sync** : Appelez `Model.sync()` pour créer les tables automatiquement
 4. **TypeScript** : Définissez toujours une interface pour vos attributs de modèle
 
-## 🤝 Contribution
+## Contribution
 
 Les contributions sont les bienvenues ! N'hésitez pas à ouvrir une issue ou une pull request.
 
-## 📄 Licence
+## Licence
 
 MIT
 
-## 🙏 Remerciements
+## Remerciements
 
 Inspiré par Sequelize, adapté pour Expo et React Native.
