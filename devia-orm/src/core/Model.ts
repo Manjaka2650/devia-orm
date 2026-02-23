@@ -73,7 +73,7 @@ export abstract class Model<_T extends Record<string, any>> {
   public static async create<M extends typeof Model>(
     this: M,
     data: Omit<InstanceType<M> extends Model<infer T> ? T : any, "id"> & {
-      id?: number;
+      id?: number | string; // ← accepte UUID string et INTEGER autoincrement
     },
   ): Promise<InstanceType<M> extends Model<infer T> ? T : any> {
     const tableName = this.getTableName();
@@ -108,15 +108,23 @@ export abstract class Model<_T extends Record<string, any>> {
    */
   public static async destroy<M extends typeof Model>(
     this: M,
-    options: DestroyOptions<InstanceType<M> extends Model<infer T> ? T : any>,
+    options: DestroyOptions<any>,
   ): Promise<number> {
     const tableName = this.getTableName();
-    const { sql, params } = QueryBuilder.buildDelete(tableName, options);
 
+    // Si soft delete est activé
+    if ((this as any).softDelete) {
+      return this.update(
+        { deletedAt: new Date().toISOString() } as any,
+        options,
+      );
+    }
+
+    // Sinon, suppression physique
+    const { sql, params } = QueryBuilder.buildDelete(tableName, options);
     const result = await this.db.execute(sql, params);
     return result.rowsAffected || 0;
   }
-
   /**
    * Compter les enregistrements
    */

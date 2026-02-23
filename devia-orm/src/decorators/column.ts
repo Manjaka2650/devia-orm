@@ -16,7 +16,9 @@ export interface ColumnOptions {
  * Décorateur de propriété pour définir une colonne
  * @param typeOrOptions - Type de colonne ou options complètes
  */
-export function Column(typeOrOptions?: ColumnType | ColumnOptions): PropertyDecorator {
+export function Column(
+  typeOrOptions?: ColumnType | ColumnOptions,
+): PropertyDecorator {
   return function (target: any, propertyKey: string | symbol) {
     const propName = String(propertyKey);
 
@@ -49,22 +51,34 @@ export function Column(typeOrOptions?: ColumnType | ColumnOptions): PropertyDeco
 /**
  * Décorateur pour marquer une colonne comme clé primaire
  */
-export function PrimaryKey(autoIncrement: boolean = true): PropertyDecorator {
+// APRÈS ✅
+export function PrimaryKey(
+  autoIncrement: boolean = true,
+  type: ColumnType = "INTEGER", // ← nouveau paramètre avec fallback
+): PropertyDecorator {
   return function (target: any, propertyKey: string | symbol) {
     const propName = String(propertyKey);
 
+    // Si le type n'est pas fourni explicitement,
+    // on essaie de l'inférer depuis le type TypeScript de la propriété
+    const tsType = Reflect.getMetadata?.("design:type", target, propertyKey);
+    const resolvedType: ColumnType =
+      type !== "INTEGER"
+        ? type // explicitement demandé
+        : tsType?.name === "String"
+          ? "TEXT" // inféré depuis TS
+          : "INTEGER"; // fallback par défaut
+
     const metadata: ColumnMetadata = {
       name: propName,
-      type: "INTEGER",
+      type: resolvedType,
       primaryKey: true,
-      autoIncrement,
+      autoIncrement: resolvedType === "INTEGER" ? autoIncrement : false, // pas d'autoIncrement sur TEXT
       nullable: false,
     };
-
     MetadataStorage.registerColumn(target, propName, metadata);
   };
 }
-
 /**
  * Décorateur combiné pour ID auto-incrémenté
  */
@@ -78,7 +92,7 @@ export function AutoIncrement(): PropertyDecorator {
 export function NotNull(): PropertyDecorator {
   return function (target: any, propertyKey: string | symbol) {
     const propName = String(propertyKey);
-    
+
     // Récupérer ou créer les métadonnées
     const existing = MetadataStorage.getTableMetadata(target.constructor);
     const existingColumn = existing?.columns.get(propName);
@@ -98,7 +112,7 @@ export function NotNull(): PropertyDecorator {
 export function Unique(): PropertyDecorator {
   return function (target: any, propertyKey: string | symbol) {
     const propName = String(propertyKey);
-    
+
     const existing = MetadataStorage.getTableMetadata(target.constructor);
     const existingColumn = existing?.columns.get(propName);
 
@@ -117,7 +131,7 @@ export function Unique(): PropertyDecorator {
 export function Default(value: any): PropertyDecorator {
   return function (target: any, propertyKey: string | symbol) {
     const propName = String(propertyKey);
-    
+
     const existing = MetadataStorage.getTableMetadata(target.constructor);
     const existingColumn = existing?.columns.get(propName);
 
