@@ -1,3 +1,5 @@
+import { Model } from './Model';
+
 /**
  * Opérateurs pour les requêtes WHERE
  */
@@ -25,8 +27,16 @@ export type FindOptions<T> = {
   where?: WhereOptions<T>;
   limit?: number;
   offset?: number;
-  order?: [keyof T, "ASC" | "DESC"][];
+  order?: [keyof T, 'ASC' | 'DESC'][];
+
+  include?: IncludeOption[];
 };
+
+export interface IncludeOption {
+  model?: typeof Model;
+  as?: string;
+  include?: IncludeOption[];
+}
 
 /**
  * Options pour les requêtes update
@@ -45,7 +55,7 @@ export type DestroyOptions<T> = {
 /**
  * Types de colonnes SQLite
  */
-export type ColumnType = "INTEGER" | "TEXT" | "REAL" | "BLOB" | "NULL";
+export type ColumnType = 'INTEGER' | 'TEXT' | 'REAL' | 'BLOB' | 'NULL';
 
 /**
  * Métadonnées d'une colonne
